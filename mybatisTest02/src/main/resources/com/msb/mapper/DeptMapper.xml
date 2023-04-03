@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.msb.mapper.DeptMapper">
+
+    <!--
+    自增回填方式一
+    int addDept(Dept dept);
+    useGeneratedKeys="true"  返回数据库帮我们生成的主键
+    keyProperty="deptno"    生成的主键值用我们dept对象的那个属性存储
+    -->
+    <insert id="addDept" useGeneratedKeys="true" keyProperty="deptno">
+        insert into dept values(DEFAULT,#{dname},#{loc})
+    </insert>
+    <!--
+    自增回填方式二：
+    int addDept2(Dept dept);
+
+    order：取值AFTER|BEFORE，表示在新增之后|之前执行<selectKey>中的SQL命令
+    keyProperty：执行 select @@identity 后结果填充到哪个属性
+    resultType：结果类型
+    -->
+    <insert id="addDept2">
+        <selectKey order="AFTER" keyProperty="deptno"  resultType="int">
+            select @@identity
+        </selectKey>
+        insert into dept values (DEFAULT,#{dname},#{loc})
+    </insert>
+</mapper>

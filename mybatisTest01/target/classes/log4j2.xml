@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--配置   目前打印级别为 debug级别-->
+<Configuration status="DEBUG">
+    <Appenders>
+<!--        Appenders（输出源）有两种打印方式-->
+<!--        第一种是控制台方式-->
+        <Console name="Console" target="SYSTEM_ERR">
+            <PatternLayout pattern="%d{YYYY-MM-dd HH:mm:ss} [%t] %-5p %c{1}:%L - %msg%n" />
+        </Console>
+<!--        第二种是滚动文件的方式-->
+        <RollingFile name="RollingFile" filename="log/test.log"
+                     filepattern="${logPath}/%d{YYYYMMddHHmmss}-fargo.log">
+            <PatternLayout pattern="%d{YYYY-MM-dd HH:mm:ss} [%t] %-5p %c{1}:%L - %msg%n" />
+            <Policies>
+                <SizeBasedTriggeringPolicy size="10 MB" />
+            </Policies>
+            <DefaultRolloverStrategy max="20" />
+        </RollingFile>
+
+    </Appenders>
+    <Loggers>
+        <Root level="DEBUG">
+<!--            这里控制输出源Appenders的打印方式-->
+            <AppenderRef ref="Console" />
+        </Root>
+    </Loggers>
+</Configuration>

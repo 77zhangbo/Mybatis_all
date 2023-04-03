@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.msb.mapper.EmpMapper">
+
+    <!-- 4个注意！
+    1. 接口的名字和Mapper映射文件的名字必须保持一致（不包含拓展名）
+    2. Mapper映射文件的namespace必须是接口的全路径名称
+    3. SQL语句的id必须是对应方法的名
+    4. EmpMapper映射文件应该和接口编译之后放在同一个目录下
+    -->
+
+    <!-- List<Emp>   findAll(); -->
+
+    <select id="findAll" resultType="com.msb.pojo.Emp">
+            select * from emp
+    </select>
+
+    <!--
+    单个基本数据类型作为方法参数
+    #{}中可以随便写，但是仍然遵循 见名知意原则
+    Emp findByEmpno(int empno);
+    -->
+    <select id="findByEmpno" resultType="com.msb.pojo.Emp">
+        select * from emp where empno = #{empno}
+    </select>
+
+
+    <!--
+    多个基本数据类型作为方法参数
+    List<Emp> findByDeptnoAndSal(int empno,double sal);
+    方式1 arg*        arg0 arg1 arg2          （数字代表索引，从0开始）
+    方式2 param*      param1 param2 param3    （数字代表编号，从1开始）
+    方式3 使用别名:
+        List<Emp> findByDeptnoAndSal(@Param("deptno") int deptno, @Param("sal") double sal);
+    通过@Param注解使用别名之后，就不能再使用 arg*，但是可以继续使用param*
+    -->
+    <select id="findByDeptnoAndSal" resultType="com.msb.pojo.Emp">
+<!--        select * from Emp where deptno = #{arg0} and sal >= #{arg1}-->
+<!--            select * from Emp where deptno = #{param1} and sal >= #{param2}-->
+            select * from Emp where deptno = #{deptno} and sal >= #{sal}
+    </select>
+
+    <!--
+    List<Emp> findByDeptnoAndSal2(Map<String,Object> map);
+    参数是map，{}里写键的名字
+    -->
+    <select id="findByDeptnoAndSal2" resultType="com.msb.pojo.Emp" parameterType="map">
+        <!--        select * from Emp where deptno = #{arg0} and sal >= #{arg1}-->
+        <!--            select * from Emp where deptno = #{param1} and sal >= #{param2}-->
+        select * from Emp where deptno = #{deptno} and sal >= #{sal}
+    </select>
+
+    <!--
+    单个引用类型，{}中写的是对象的属性名
+    List<Emp> findByDeptnoAndSal3(Emp emp);
+    -->
+    <select id="findByDeptnoAndSal3" resultType="com.msb.pojo.Emp">
+        select * from Emp where deptno = #{deptno} and sal >= #{sal}
+    </select>
+
+    <!--
+    多个引用类型作为方法参数
+    List<Emp> findByDeptnoAndSal4(Emp empa,Emp empb);
+
+    List<Emp> findByDeptnoAndSal4(@Param("empa") Emp empa,@Param("empb") Emp empb);
+    如果用@Param定义了别名，那么就不能使用arg*.属性名，但是可以使用 param*.属性名和 别名.属性名
+    -->
+    <select id="findByDeptnoAndSal4" resultType="com.msb.pojo.Emp">
+<!--        select * from Emp where deptno = #{arg0.deptno} and sal >= #{arg1.sal}-->
+<!--        select * from Emp where deptno = #{param1.deptno} and sal >= #{param2.sal}-->
+        select * from Emp where deptno = #{empa.deptno} and sal >= #{empb.sal}
+    </select>
+
+    <!--
+    根据ename做模糊查询
+    List<Emp> findByEname(String ename);
+    -->
+    <select id="findByEname" resultType="com.msb.pojo.Emp">
+        select * from Emp where ename like concat('%',#{ename},'%')
+    </select>
+
+    <!--
+    Mybatis代理模式实现CURD
+    增加员工信息
+    int addEmp(Emp emp);
+    -->
+     <insert id="addEmp">
+        insert into emp values (DEFAULT,#{ename},#{job},#{mgr},#{hiredate},#{sal},#{comm},#{deptno})
+    </insert>
+
+    <!--
+    根据员工工号修改员工姓名
+    int updateEnameByEmpno(@Param("empno") int empno,@Param("ename") String ename);
+    -->
+    <update id="updateEnameByEmpno">
+        update emp set ename = #{ename} where empno = #{empno}
+    </update>
+
+    <!--
+    根据员工工号删除员工信息
+    int deleteByEmpno(int empno);
+    -->
+    <delete id="deleteByEmpno">
+        delete from emp where empno = #{empno}
+    </delete>
+</mapper>

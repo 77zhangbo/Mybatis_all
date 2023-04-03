@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--文档的约束-->
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+    <properties resource="jdbc.properties"/>
+
+<!--    <settings>-->
+<!--&lt;!&ndash;        指定mybatis日志方式，如果不指定，自动查找处理&ndash;&gt;-->
+<!--        <setting name="logImpl" value="LOG4J"/>-->
+<!--    </settings>-->
+    <typeAliases>
+        <!--类型别名，涉及到com.msb.pojo.Dept的地方 都可以换成 dept-->
+        <typeAlias type="com.msb.pojo.Dept" alias="dept"></typeAlias>
+<!--        <typeAlias type=""></typeAlias>-->
+        <!--包扫描起别名，规则：类的短路径名字首字母小写!适合有很多类-->
+<!--        <package name="com.msb.pojo"/>-->
+    </typeAliases>
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC"/>   <!--事务管理-->
+            <dataSource type="POOLED">
+                <property name="driver" value="${jdbc_driver}"/>
+                <property name="url" value="${jdbc_url}"/>
+                <property name="username" value="${jdbc_username}"/>
+                <property name="password" value="${jdbc_password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+    <mappers>
+        <mapper resource="com/msb/mapper/DeptMapper.xml"/>
+        <mapper resource="com/msb/mapper/EmpMapper.xml"/>
+        <mapper resource="com/msb/mapper/EmpMapper2.xml"/>
+        <mapper resource="com/msb/mapper/EmpMapper3.xml"/>
+    </mappers>
+</configuration>
