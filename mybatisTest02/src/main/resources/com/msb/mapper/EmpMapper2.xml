@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.msb.mapper.EmpMapper2">
+
+<!-- List<Emp> findByCondition(Emp emp); -->
+    <select id="findByCondition" resultType="com.msb.pojo.Emp">
+        select * from emp where 1=1
+        <if test="empno != null">
+            and empno = #{empno}
+        </if>
+        <if test="ename != null and ename != ''">       <!-- ename为String类型，需要额外判断空字符‘ ’ -->
+            and ename like concat('%',#{ename},'%')     <!-- 模糊查询 -->
+        </if>
+        <if test="job != null and job != ''">           <!-- job为String类型，需要额外判断空字符‘ ’ -->
+            and job = #{job}
+        </if>
+        <if test="mgr != null">
+            and mgr = #{mgr}
+        </if>
+        <if test="hiredate != null">
+            and hiredate = #{hiredate}
+        </if>
+        <if test="sal != null">
+            and sal = #{sal}
+        </if>
+        <if test="comm != null">
+            and comm = #{comm}
+        </if>
+        <if test="deptno != null">
+            and deptno = #{deptno}
+        </if>
+
+
+    </select>
+
+</mapper>
