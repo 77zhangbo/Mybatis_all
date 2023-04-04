@@ -15,6 +15,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -106,6 +108,26 @@ import java.util.List;
          mapper.uodateEmpByCondition2(emp);
          sqlSession.commit();
      }
+
+
+     @Test
+     /* 测试 foreach 遍历数组 */
+     public void testFindByEmpnos1() throws ParseException {
+         EmpMapper2 mapper = sqlSession.getMapper(EmpMapper2.class);
+         List<Emp> emps = mapper.findByEmpnos1(new int[]{7566, 7698, 7900});
+         emps.forEach(System.out::println);
+     }
+
+     @Test
+     /* 测试 foreach 遍历List集合 */
+     public void testFindByEmpnos2() throws ParseException {
+         EmpMapper2 mapper = sqlSession.getMapper(EmpMapper2.class);
+         List<Integer> empnos =new ArrayList<>();
+         Collections.addAll(empnos,7566, 7698, 7900);
+         List<Emp> emps = mapper.findByEmpnos2(empnos);
+         emps.forEach(System.out::println);
+     }
+
 
      @After
      public void  release(){

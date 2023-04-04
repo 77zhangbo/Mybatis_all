@@ -82,7 +82,8 @@
     </select>
 
 
-<!-- set标签 -->
+
+    <!-- set标签 -->
     <!-- int uodateEmpByCondition(Emp emp);-->
     <update id="uodateEmpByCondition">
         update emp
@@ -150,4 +151,32 @@
         </trim>
         where empno = #{empno}
     </update>
+
+
+<!--动态SQL之 foreach-->
+    <!--    List<Emp> findByEmpnos1(int[] empnos);-->
+    <!-- 遍历的是 数组-->
+        <!--
+            collection=""    遍历的是集合或者是数组
+            separator=""     多个元素取出的时候，用什么文字分隔
+            open=""          以什么开头
+            close=""         以什么结尾
+            item=""          中间变量名
+            类似于 for(Person per:PersonList)
+        -->
+    <select id="findByEmpnos1" resultType="com.msb.pojo.Emp">
+        select * from emp where empno in
+        <foreach collection="array" separator="," open="(" close=")" item="deptno">
+            #{deptno}
+        </foreach>
+    </select>
+
+    <!--    List<Emp> findByEmpnos2(List<Integer> empnos);-->
+    <!-- 遍历的是 List集合-->
+    <select id="findByEmpnos2" resultType="com.msb.pojo.Emp">
+        select * from emp where empno in
+        <foreach collection="list" separator="," open="(" close=")" item="deptno">
+            #{deptno}
+        </foreach>
+    </select>
 </mapper>
