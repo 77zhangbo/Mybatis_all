@@ -4,7 +4,8 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.msb.mapper.EmpMapper2">
 
-<!-- List<Emp> findByCondition(Emp emp); -->
+
+    <!-- List<Emp> findByCondition(Emp emp); -->
     <select id="findByCondition" resultType="com.msb.pojo.Emp">
         select * from emp
         <where>
@@ -73,4 +74,33 @@
         </where>
     </select>
 
+
+    <!-- int uodateEmpByCondition(Emp emp);-->
+    <update id="uodateEmpByCondition">
+        update emp
+        <set>           <!-- set 标签会自动去掉第一个条件的逗号 -->
+            <if test="ename != null and ename != ''">       <!-- ename为String类型，需要额外判断空字符‘ ’ -->
+                , ename = #{ename}
+            </if>
+            <if test="job != null and job != ''">           <!-- job为String类型，需要额外判断空字符‘ ’ -->
+                , job = #{job}
+            </if>
+            <if test="mgr != null">
+                , mgr = #{mgr}
+            </if>
+            <if test="hiredate != null">
+                , hiredate = #{hiredate}
+            </if>
+            <if test="sal != null">
+                , sal = #{sal}
+            </if>
+            <if test="comm != null">
+                , comm = #{comm}
+            </if>
+            <if test="deptno != null">
+                , deptno = #{deptno}
+            </if>
+        </set>
+        where empno = #{empno}
+    </update>
 </mapper>
