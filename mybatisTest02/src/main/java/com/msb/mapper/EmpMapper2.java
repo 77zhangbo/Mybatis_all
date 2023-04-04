@@ -9,5 +9,6 @@ import java.util.Map;
 public interface EmpMapper2 {
 
     List<Emp> findByCondition(Emp emp);
+    List<Emp> findByCondition2(Emp emp);
 
 }

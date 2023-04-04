@@ -34,12 +34,10 @@ import java.util.List;
          sqlSession = factory.openSession();
 
      }
-/* Mybatis代理模式实现CURD
-*
-* */
+
      @Test
-     //增加员工信息
-     public void testAddEmp() throws ParseException {
+     //动态sql之if语句
+     public void testFindByCondition() throws ParseException {
          EmpMapper2 mapper = sqlSession.getMapper(EmpMapper2.class);
          Emp emp =new Emp();
          emp.setEname("A");       /* 按名字里包含A的去查 */
@@ -51,6 +49,25 @@ import java.util.List;
 //         emp.setComm(300.0);    /* 按补助金额去查 */
 //         emp.setDeptno(10);     /* 按部门号去查 */
          List<Emp> emps =mapper.findByCondition(emp);
+         for (Emp emp1 : emps) {
+             System.out.println(emp1);
+         }
+     }
+
+     @Test
+     //动态sql之if语句
+     public void testFindByCondition2() throws ParseException {
+         EmpMapper2 mapper = sqlSession.getMapper(EmpMapper2.class);
+         Emp emp =new Emp();
+         emp.setEname("A");       /* 按名字里包含A的去查 */
+         emp.setEmpno(7369);    /* 按工号去查 */
+//         emp.setJob("CLERK");   /* 按职位去查 */
+//         emp.setMgr(7839);      /* 按上司去查 */
+//         emp.setHiredate(new SimpleDateFormat("yyyy-MM-dd").parse("1981-06-09"));       /*按出生日期去查*/
+//         emp.setSal(3000.0);    /* 按薪资去查 */
+//         emp.setComm(300.0);    /* 按补助金额去查 */
+//         emp.setDeptno(10);     /* 按部门号去查 */
+         List<Emp> emps =mapper.findByCondition2(emp);
          for (Emp emp1 : emps) {
              System.out.println(emp1);
          }
