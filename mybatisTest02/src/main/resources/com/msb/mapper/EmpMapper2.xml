@@ -13,7 +13,8 @@
                 and empno = #{empno}
             </if>
             <if test="ename != null and ename != ''">       <!-- ename为String类型，需要额外判断空字符‘ ’ -->
-                and ename like concat('%',#{ename},'%')     <!-- 模糊查询 -->
+                <bind name="likePattern" value="'%'+ename+'%'"/>
+                and ename like #{likePattern}       <!-- bind模糊查询 -->
             </if>
             <if test="job != null and job != ''">           <!-- job为String类型，需要额外判断空字符‘ ’ -->
                 and job = #{job}
