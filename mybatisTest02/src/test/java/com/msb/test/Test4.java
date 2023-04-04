@@ -55,7 +55,7 @@ import java.util.List;
      }
 
      @Test
-     //动态sql之if语句
+     //动态sql  where和when
      public void testFindByCondition2() throws ParseException {
          EmpMapper2 mapper = sqlSession.getMapper(EmpMapper2.class);
          Emp emp =new Emp();
@@ -74,6 +74,7 @@ import java.util.List;
      }
 
      @Test
+     /* 测试set标签 */
      public void testUpdateEmpByCondition() throws ParseException {
          EmpMapper2 mapper = sqlSession.getMapper(EmpMapper2.class);
          Emp emp = new Emp();
@@ -89,6 +90,22 @@ import java.util.List;
          sqlSession.commit();
      }
 
+     @Test
+     /* 测试 trim标签 */
+     public void testUpdateEmpByCondition2() throws ParseException {
+         EmpMapper2 mapper = sqlSession.getMapper(EmpMapper2.class);
+         Emp emp = new Emp();
+         emp.setEmpno(7940);    /* 修改工号 */
+         emp.setEname("Ken");   /* 修改姓名 */
+//         emp.setJob("CLERK");   /* 修改职位 */
+//         emp.setMgr(7839);      /* 修改上级 */
+//         emp.setHiredate(new SimpleDateFormat("yyyy-MM-dd").parse("2019-09-06"));   /* 修改出生日期 */
+//         emp.setSal(3500.0);    /* 修改薪资 */
+//         emp.setComm(200.0);    /* 修改补助 */
+         emp.setDeptno(10);     /* 修改部门号 */
+         mapper.uodateEmpByCondition2(emp);
+         sqlSession.commit();
+     }
 
      @After
      public void  release(){

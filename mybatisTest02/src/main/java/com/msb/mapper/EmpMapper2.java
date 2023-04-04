@@ -12,5 +12,6 @@ public interface EmpMapper2 {
     List<Emp> findByCondition2(Emp emp);
 
     int uodateEmpByCondition(Emp emp);
+    int uodateEmpByCondition2(Emp emp);
 
 }

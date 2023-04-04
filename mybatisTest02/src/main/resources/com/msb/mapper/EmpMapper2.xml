@@ -4,7 +4,7 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.msb.mapper.EmpMapper2">
 
-
+<!-- 动态SQL if语句 -->
     <!-- List<Emp> findByCondition(Emp emp); -->
     <select id="findByCondition" resultType="com.msb.pojo.Emp">
         select * from emp
@@ -37,6 +37,8 @@
 
     </select>
 
+
+<!-- choose和when 标签-->
     <!--
     choose 和 when
     choose 只拼接第一个成立的when里的条件，即使后边的条件也成立，但是不会拼接！
@@ -75,6 +77,7 @@
     </select>
 
 
+<!-- set标签 -->
     <!-- int uodateEmpByCondition(Emp emp);-->
     <update id="uodateEmpByCondition">
         update emp
@@ -101,6 +104,45 @@
                 , deptno = #{deptno}
             </if>
         </set>
+        where empno = #{empno}
+    </update>
+
+
+<!-- trim 标签-->
+    <!-- int uodateEmpByCondition2(Emp emp); -->
+    <update id="uodateEmpByCondition2">
+        update emp
+        <!-- <trim> 标签
+             prefix   要动态添加的前缀
+             prefixOverrides   要去掉的前缀
+             suffix   要动态添加的后缀
+             suffixOverrides   要去掉的后缀
+
+             <trim prefix="set" prefixOverrides="," suffix="" suffixOverrides="">
+        -->
+        <trim prefix="set" prefixOverrides="," suffix="" suffixOverrides="">
+            <if test="ename != null and ename != ''">       <!-- ename为String类型，需要额外判断空字符‘ ’ -->
+                , ename = #{ename}
+            </if>
+            <if test="job != null and job != ''">           <!-- job为String类型，需要额外判断空字符‘ ’ -->
+                , job = #{job}
+            </if>
+            <if test="mgr != null">
+                , mgr = #{mgr}
+            </if>
+            <if test="hiredate != null">
+                , hiredate = #{hiredate}
+            </if>
+            <if test="sal != null">
+                , sal = #{sal}
+            </if>
+            <if test="comm != null">
+                , comm = #{comm}
+            </if>
+            <if test="deptno != null">
+                , deptno = #{deptno}
+            </if>
+        </trim>
         where empno = #{empno}
     </update>
 </mapper>
