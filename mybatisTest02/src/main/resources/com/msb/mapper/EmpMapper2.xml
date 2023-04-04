@@ -4,11 +4,15 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.msb.mapper.EmpMapper2">
 
-<!-- 动态SQL if语句 -->
+    <!-- sql语句就是在上面定义一些公共的字段或者语句，下面用的时候直接引用 -->
+    <sql id="empColumn">empno,ename,job,mgr,hiredate,sal,comm,deptno</sql>   <!-- sql 标签 -->
+    <sql id="baseSelect">select <include refid="empColumn"></include>from emp</sql>
+
     <!-- List<Emp> findByCondition(Emp emp); -->
     <select id="findByCondition" resultType="com.msb.pojo.Emp">
-        select * from emp
+        <include refid="baseSelect"></include>   <!-- sql标签的使用 -->
         <where>
+            <!-- 动态SQL if语句 -->
             <if test="empno != null">
                 and empno = #{empno}
             </if>
