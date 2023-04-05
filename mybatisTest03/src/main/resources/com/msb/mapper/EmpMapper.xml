@@ -3,8 +3,23 @@
 <mapper namespace="com.msb.mapper.EmpMapper">
     <!--namespace根据自己需要创建的的mapper的路径和名称填写-->
 
+    <!-- 手动处理映射关系 -->
+    <!-- 与数据库字段名不同的可以用resultMap进行手动处理映射，相同的可以不写-->
+    <resultMap id="empResultMap" type="com.msb.pojo.Emp">
+        <!-- column 表示为数据库的列名 property表示为对应的属性名 -->
+        <!-- 如果字段是 主键，就用 id 标签-->
+        <id column="empno" property="empno"></id>
+        <!-- 如果不是主键，就用 result 标签-->
+        <result column="ename" property="name"></result>
+        <result column="job" property="job"></result>
+        <result column="mgr" property="mgr"></result>
+        <result column="hiredate" property="hiredate"></result>
+        <result column="sal" property="sal"></result>
+        <result column="comm" property="comm"></result>
+        <result column="deptno" property="deptno"></result>
+    </resultMap>
     <!-- List<Emp> findAll(); -->
-    <select id="findAll" resultType="com.msb.pojo.Emp">
+    <select id="findAll" resultMap="empResultMap">
         select * from emp
     </select>
 </mapper>
