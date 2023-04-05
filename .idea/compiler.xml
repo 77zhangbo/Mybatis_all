@@ -10,11 +10,13 @@
         <module name="mybatisTest02" />
         <module name="mybatisTest01" />
         <module name="mybatisTest04" />
+        <module name="mybatisTest03" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="mybatisTest01" target="8" />
       <module name="mybatisTest02" target="8" />
+      <module name="mybatisTest03" target="8" />
       <module name="mybatisTest04" target="8" />
     </bytecodeTargetLevel>
   </component>
