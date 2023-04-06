@@ -2,14 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.msb.mapper.EmpMapper">
     <!--namespace根据自己需要创建的的mapper的路径和名称填写-->
-
-    <!-- 手动处理映射关系 -->
-    <!-- 与数据库字段名不同的可以用resultMap进行手动处理映射，相同的可以不写-->
+<!--
+    &lt;!&ndash; 手动处理映射关系 &ndash;&gt;
+    &lt;!&ndash; 与数据库字段名不同的可以用resultMap进行手动处理映射，相同的可以不写&ndash;&gt;
     <resultMap id="empResultMap" type="com.msb.pojo.Emp">
-        <!-- column 表示为数据库的列名 property表示为对应的属性名 -->
-        <!-- 如果字段是 主键，就用 id 标签-->
+        &lt;!&ndash; column 表示为数据库的列名 property表示为对应的属性名 &ndash;&gt;
+        &lt;!&ndash; 如果字段是 主键，就用 id 标签&ndash;&gt;
         <id column="empno" property="empno"></id>
-        <!-- 如果不是主键，就用 result 标签-->
+        &lt;!&ndash; 如果不是主键，就用 result 标签&ndash;&gt;
         <result column="ename" property="name"></result>
         <result column="job" property="job"></result>
         <result column="mgr" property="mgr"></result>
@@ -18,8 +18,41 @@
         <result column="comm" property="comm"></result>
         <result column="deptno" property="deptno"></result>
     </resultMap>
-    <!-- List<Emp> findAll(); -->
+    &lt;!&ndash; List<Emp> findAll(); &ndash;&gt;
     <select id="findAll" resultMap="empResultMap">
         select * from emp
     </select>
+    -->
+    
+    <!-- Emp findEmpJoinDeptByEmpno(int empno); -->
+    <resultMap id="empJoinDept" type="com.msb.pojo.Emp">
+        <!-- 设置emp本身的八个属性的映射关系 -->
+        <id column="empno" property="empno"></id>
+        <result column="ename" property="ename"></result>
+        <result column="job" property="job"></result>
+        <result column="mgr" property="mgr"></result>
+        <result column="hiredate" property="hiredate"></result>
+        <result column="sal" property="sal"></result>
+        <result column="comm" property="comm"></result>
+        <result column="deptno" property="deptno"></result>
+
+        <!-- association 处理多表查询一对一的
+            封装一对一信息关系的标签
+            property：emp类的属性名
+            javaType：用哪个类的对象给该属性赋值
+        -->
+        <association property="dept" javaType="com.msb.pojo.Dept">
+            <id column="deptno" property="deptno"></id>
+            <result column="dname" property="dname"></result>
+            <result column="loc" property="loc"></result>
+        </association>
+    </resultMap>
+    <select id="findEmpJoinDeptByEmpno" resultMap="empJoinDept">
+        select * from
+                      emp e
+                          left join dept d
+                              on e.deptno = d.deptno
+        where empno= #{empno}
+    </select>
+
 </mapper>

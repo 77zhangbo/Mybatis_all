@@ -12,11 +12,13 @@ import java.util.Date;
 @NoArgsConstructor
 public class Emp implements Serializable {
     private Integer empno;
-    private String name;  /* 修改之后和数据表中字段名不一致 手动去处理映射关系 */
+    private String ename;  /* 修改之后和数据表中字段名不一致 手动去处理映射关系 */
     private String job;
     private Integer mgr;
     private Date hiredate;
     private Double sal;
     private Double comm;
     private Integer deptno;
+    //组合一个Dept对象作为自己的属性
+    private Dept dept;
 }
