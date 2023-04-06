@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.msb.mapper.ProjectMapper">
+    <!--namespace根据自己需要创建的的mapper的路径和名称填写-->
+
+
+<!--    Project findProjectJoinEmpsByPid(int pid);-->
+    <resultMap id="projectJoinEmps" type="com.msb.pojo.Project">
+        <id column="pid" property="pid"></id>
+        <result column="pname" property="pname"></result>
+        <result column="money" property="money"></result>
+
+        <!-- 一对多集合属性 用 collection 标签-->
+        <collection property="projectRecords" ofType="com.msb.pojo.ProjectRecord">
+            <id column="empno" property="empno"></id>
+            <id column="pid" property="pid"></id>
+
+            <!--
+             每一个projectRecord对象对应一个Emp对象
+             一对一 集合属性，用 association对象
+             -->
+            <association property="emp" javaType="com.msb.pojo.Emp">
+                <!-- 设置emp本身的八个属性的映射关系 -->
+                <id column="empno" property="empno"></id>
+                <result column="ename" property="ename"></result>
+                <result column="job" property="job"></result>
+                <result column="mgr" property="mgr"></result>
+                <result column="hiredate" property="hiredate"></result>
+                <result column="sal" property="sal"></result>
+                <result column="comm" property="comm"></result>
+                <result column="deptno" property="deptno"></result>
+            </association>
+        </collection>
+    </resultMap>
+    <select id="findProjectJoinEmpsByPid" resultMap="projectJoinEmps">
+        select * from
+                      project p
+                          left join projectrecord pr
+                              on p.pid = pr.pid
+                          left join emp e
+                              on e.empno = pr.empno
+        where p.pid = #{pid}
+    </select>
+</mapper>

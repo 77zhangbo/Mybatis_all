@@ -2,8 +2,11 @@ package com.msb.test;
 
 import com.msb.mapper.DeptMapper;
 import com.msb.mapper.EmpMapper;
+import com.msb.mapper.ProjectMapper;
 import com.msb.pojo.Dept;
 import com.msb.pojo.Emp;
+import com.msb.pojo.Project;
+import com.msb.pojo.ProjectRecord;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -55,6 +58,23 @@ public class Test2 {
         empList.forEach(System.out::println);
     }
 
+    /**
+     * 多表查询，测试多对多关系
+     */
+    @Test
+    public void testManyToMany(){
+        ProjectMapper mapper = sqlSession.getMapper(ProjectMapper.class);
+        Project project = mapper.findProjectJoinEmpsByPid(2);
+        System.out.println(project.getPid());
+        System.out.println(project.getPname());
+        System.out.println(project.getMoney());
+
+        List<ProjectRecord> projectRecords = project.getProjectRecords(); //通过project获取项目记录
+        for (ProjectRecord projectRecord : projectRecords) {
+            Emp emp = projectRecord.getEmp();//通过 projectRecord获得每个Emp对象
+            System.out.println(emp); //输出每个Emp对象
+        }
+    }
 
     @After
     public void  release(){
