@@ -1,6 +1,8 @@
 package com.msb.test;
 
+import com.msb.mapper.DeptMapper;
 import com.msb.mapper.EmpMapper;
+import com.msb.pojo.Dept;
 import com.msb.pojo.Emp;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -31,12 +33,26 @@ public class Test2 {
 
     }
 
-
+    /**
+     * 多表查询，测试一对一关系
+     */
     @Test
-    public void testFindAll(){
+    public void testOneToOne(){
         EmpMapper mapper = sqlSession.getMapper(EmpMapper.class);
-        Emp emp = mapper.findEmpJoinDeptByEmpno(7499);
+        Emp emp = mapper.findEmpJoinDeptByEmpno(7566);
         System.out.println(emp);
+    }
+
+    /**
+     * 多表查询，测试一对多关系
+     */
+    @Test
+    public  void testOneToMany(){
+        DeptMapper mapper = sqlSession.getMapper(DeptMapper.class);
+        Dept dept = mapper.findDeptJoinEmpsByDeptno(20);
+        System.out.println(dept);
+        List<Emp> empList = dept.getEmpList();
+        empList.forEach(System.out::println);
     }
 
 
