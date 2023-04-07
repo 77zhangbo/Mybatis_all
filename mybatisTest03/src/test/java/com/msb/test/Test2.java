@@ -64,7 +64,7 @@ public class Test2 {
     @Test
     public void testManyToMany(){
         ProjectMapper mapper = sqlSession.getMapper(ProjectMapper.class);
-        Project project = mapper.findProjectJoinEmpsByPid(2);
+        Project project = mapper.findProjectJoinEmpsByPid(3);
         System.out.println(project.getPid());
         System.out.println(project.getPname());
         System.out.println(project.getMoney());
