@@ -40,7 +40,7 @@ public class Test1 {
         DeptMapper deptMapper = sqlSession.getMapper(DeptMapper.class);
 //        EmpMapper empMapper = sqlSession.getMapper(EmpMapper.class);
         Dept dept = deptMapper.findByDeptno(20);
-//        System.out.println(dept.getDeptno());
+        System.out.println(dept.getDeptno());
 //        System.out.println(dept.getDname());
 //        System.out.println(dept.getLoc());
         List<Emp> empList = dept.getEmpList();
