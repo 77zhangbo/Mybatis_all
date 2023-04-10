@@ -21,7 +21,7 @@
                     javaType="list"
                     column="deptno"
                     jdbcType="INTEGER"
-                    fetchType="eager"
+                    fetchType="lazy"
         >
 
         </collection>

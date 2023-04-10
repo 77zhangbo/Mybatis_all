@@ -6,7 +6,11 @@
 
 <configuration>
     <properties resource="jdbc.properties"/>
-
+    <!-- 全局开关，级联查询 延迟加载-->
+    <settings>
+        <setting name="lazyLoadingEnabled" value="true"/>
+        <setting name="aggressiveLazyLoading" value="true"/>
+    </settings>
 <!--    <settings>-->
 <!--&lt;!&ndash;        指定mybatis日志方式，如果不指定，自动查找处理&ndash;&gt;-->
 <!--        <setting name="logImpl" value="LOG4J"/>-->

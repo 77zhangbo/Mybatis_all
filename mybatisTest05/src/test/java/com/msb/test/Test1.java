@@ -34,15 +34,15 @@ public class Test1 {
 
     @Test
     /**
-     * 测试 级联积极加载
+     * 测试 级联查询 延迟加载
      */
     public void testFindByDeptno(){
         DeptMapper deptMapper = sqlSession.getMapper(DeptMapper.class);
 //        EmpMapper empMapper = sqlSession.getMapper(EmpMapper.class);
         Dept dept = deptMapper.findByDeptno(20);
-        System.out.println(dept.getDeptno());
-        System.out.println(dept.getDname());
-        System.out.println(dept.getLoc());
+//        System.out.println(dept.getDeptno());
+//        System.out.println(dept.getDname());
+//        System.out.println(dept.getLoc());
         List<Emp> empList = dept.getEmpList();
         empList.forEach(System.out::println);
 
